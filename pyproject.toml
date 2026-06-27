@@ -1,0 +1,106 @@
+[project]
+name = "vkp80iii"
+version = "0.1.0"
+description = "Pure-Python driver for the Custom Engineering VKP80III thermal ticket printer (native VKP80III emulation, ESC/POS based)"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Quobox UG (haftungsbeschränkt)" },
+]
+maintainers = [
+    { name = "Andreas Donig", email = "andreas@quobox.de" },
+]
+keywords = ["vkp80iii", "custom", "thermal-printer", "escpos", "receipt", "ticket", "kiosk"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Printing",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+    "Typing :: Typed",
+]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+# Raster image printing (logos, QR fallbacks rendered host-side)
+image = ["Pillow>=10.0"]
+# Direct libusb access without the kernel usblp driver / a udev rule
+usb = ["pyusb>=1.2"]
+# RS232 models
+serial = ["pyserial>=3.5"]
+all = ["Pillow>=10.0", "pyusb>=1.2", "pyserial>=3.5"]
+
+[project.urls]
+Homepage = "https://github.com/quobox/vkp80iii"
+Repository = "https://github.com/quobox/vkp80iii"
+Issues = "https://github.com/quobox/vkp80iii/issues"
+
+[project.scripts]
+vkp80iii = "vkp80iii.__main__:main"
+
+[build-system]
+requires = ["uv_build>=0.11.19,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+# dev installs all optional backends too, so the full codebase is testable and
+# type-checkable with a plain `uv sync` (no version drift for the hooks/CI).
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.10",
+    "pyrefly>=0.16",
+    "Pillow>=10.0",
+    "pyusb>=1.2",
+    "pyserial>=3.5",
+]
+# Documentation site (MkDocs Material + API reference from docstrings).
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.26",
+]
+
+[tool.pytest.ini_options]
+# Hardware integration tests are opt-in: the default run (and CI) deselects them.
+# Run them against a connected printer with:  uv run pytest -m hardware
+addopts = "-m 'not hardware'"
+markers = [
+    "hardware: needs a real VKP80III connected (skipped without one; not run in CI)",
+]
+
+[tool.coverage.run]
+source = ["vkp80iii"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "raise AssertionError",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+src = ["src", "tests", "examples"]
+extend-exclude = ["typings"]   # generated type stubs, not linted
+force-exclude = true           # honour excludes even when files are passed (pre-commit)
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+
+[tool.pyrefly]
+project-includes = ["src/vkp80iii"]
+search-path = ["typings"]   # hand-tweaked stubs for the untyped pyusb (issue #470)
+python-version = "3.10"

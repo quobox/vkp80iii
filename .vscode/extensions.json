@@ -1,0 +1,12 @@
+{
+  // Recommended extensions for this project. VS Code offers to install these
+  // on first open ("Show Recommended Extensions").
+  "recommendations": [
+    "ms-python.python", // Python: env selection, test discovery, debugging
+    "charliermarsh.ruff", // Ruff: lint + format (uses the venv's pinned ruff)
+    "meta.pyrefly", // Pyrefly: type checking (matches [tool.pyrefly])
+    "tamasfe.even-better-toml", // pyproject.toml: schema validation + completion
+    "redhat.vscode-yaml", // CI / mkdocs YAML
+    "editorconfig.editorconfig" // honours .editorconfig
+  ]
+}

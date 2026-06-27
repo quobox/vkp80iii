@@ -1,0 +1,39 @@
+{
+  // Use the uv-managed virtualenv, so pytest / ruff / pyrefly are the
+  // project-pinned versions -- identical to the pre-commit hooks and CI,
+  // with no version drift.
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+
+  // Ruff extension: run the ruff installed in the venv, not its bundled copy.
+  "ruff.importStrategy": "fromEnvironment",
+
+  // Type-checking is handled by Pyrefly; disable Pylance's checker so we don't
+  // get duplicate / divergent diagnostics.
+  "python.analysis.typeCheckingMode": "off",
+
+  // Format, lint-fix and import-sort on save via Ruff.
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+
+  // pytest (the venv's). Discovery honours the `-m 'not hardware'` default in
+  // pyproject, so hardware tests stay opt-in in the Test Explorer too.
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+
+  "editor.rulers": [110],
+  "search.exclude": {
+    "**/.venv": true,
+    "**/site": true,
+    "**/manuals": true,
+    "**/.ruff_cache": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true
+  }
+}

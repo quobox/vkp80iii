@@ -1,0 +1,58 @@
+site_name: vkp80iii
+site_description: Pure-Python driver for the Custom VKP80III thermal ticket/receipt printer
+site_url: https://quobox.github.io/vkp80iii/
+repo_url: https://github.com/quobox/vkp80iii
+repo_name: quobox/vkp80iii
+copyright: Copyright &copy; 2026 Quobox UG (haftungsbeschränkt) and contributors
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: sphinx
+            filters: ["!^_"]
+            members_order: source
+            show_root_heading: true
+            show_source: true
+            separate_signature: true
+            show_signature_annotations: true
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Guide: guide.md
+  - API reference:
+      - Printer: api/printer.md
+      - Commands: api/commands.md
+      - Status: api/status.md
+      - Transports: api/transport.md
+      - Constants & enums: api/constants.md
+      - Exceptions: api/exceptions.md

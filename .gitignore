@@ -1,0 +1,57 @@
+# Byte-compiled / optimized / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging / build
+build/
+dist/
+wheels/
+*.egg
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Test, coverage & type-checker caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.cover
+
+# IDEs / editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# OS cruft
+.DS_Store
+.AppleDouble
+Thumbs.db
+desktop.ini
+
+# Vendor manuals (copyrighted, not redistributed) -- NOT the MkDocs docs/ site
+manuals/
+
+# MkDocs build output
+site/
+.cache/
+
+# Scratch / local extraction output
+*.tmp
+manual.txt
+cmd.txt
+um.txt

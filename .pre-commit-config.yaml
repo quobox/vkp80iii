@@ -1,0 +1,39 @@
+# Pre-commit hooks -- run with `prek` (https://github.com/j178/prek), a fast
+# Rust reimplementation of pre-commit (drop-in compatible with this file).
+#
+# Every hook uses the project's uv-managed tools (`uv run ...`), so the versions
+# pinned in uv.lock are the single source of truth -- no version drift between
+# local development and the hooks. (No hook manages its own tool environment.)
+#
+# Setup:   uv sync && prek install
+# Run all: prek run --all-files
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check --fix
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: pyrefly
+        name: pyrefly
+        entry: uv run pyrefly check
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      - id: pytest
+        name: pytest
+        entry: uv run pytest -q
+        language: system
+        types: [python]
+        pass_filenames: false
