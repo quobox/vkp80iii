@@ -15,8 +15,7 @@ import sys
 
 from vkp80iii import Barcode, HRIPosition, Justify, Printer
 
-PAPER_WIDTH_MM = 55  # 58 mm firmware width minus a small left/right safety margin
-LEFT_OFFSET_DOTS = 12  # (58-55) mm / 2 * 8 dots: centers the 55 mm area on the 58 mm roll
+PAPER_ROLL_MM = 58  # physical roll width; for_paper() derives print area + centering offset
 LOGO_WIDTH = 220  # header logo width in dots (~27 mm)
 
 
@@ -39,7 +38,7 @@ def logo_canvas(path: str, area_dots: int, logo_w: int = LOGO_WIDTH):
 def main() -> None:
     logo_path = sys.argv[1] if len(sys.argv) > 1 else None
 
-    with Printer(paper_width_mm=PAPER_WIDTH_MM, left_offset_dots=LEFT_OFFSET_DOTS) as p:
+    with Printer.for_paper(width_mm=PAPER_ROLL_MM) as p:
         p.begin()  # reset + apply left margin + print width
 
         # --- optional logo header (centred raster, aligns with the centred text) ---

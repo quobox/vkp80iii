@@ -26,7 +26,7 @@ def card(p: Printer, title: str, subtitle: str) -> None:
 def main() -> None:
     do_collect = len(sys.argv) > 1 and sys.argv[1] == "collect"
 
-    with Printer(paper_width_mm=55, left_offset_dots=12) as p:
+    with Printer.for_paper(width_mm=58) as p:
         p.begin()  # layout once; don't reset again between tickets (ESC @ clears modes)
 
         print("1) present + EJECT  -> ticket pushed out the front after 3 s")

@@ -31,8 +31,16 @@ p.begin()        # reset (ESC @) + apply left margin and print width
 python -m vkp80iii calibrate --paper-width-mm 55
 ```
 
-Then pass the measured offset (e.g. `Printer(paper_width_mm=55, left_offset_dots=12)` —
-for a 58 mm roll with `PRINT WIDTH` set to 58 mm, `(58−55) mm ÷ 2 × 8 = 12` dots centers it).
+Then pass the measured offset (e.g. `Printer(paper_width_mm=55, left_offset_dots=12)`).
+
+For the common case where the firmware `PRINT WIDTH` matches the paper, skip the
+arithmetic and use the `for_paper()` factory — it derives the print width and the
+centering offset from the physical roll width and a per-side margin:
+
+```python
+p = Printer.for_paper(width_mm=58)              # -> paper_width_mm=55, left_offset_dots=12
+p = Printer.for_paper(width_mm=58, margin_mm=2) # wider safety margin (-> offset 16)
+```
 
 ## Text & formatting
 

@@ -89,13 +89,15 @@ origin lands depends on the printer's persistent **`PRINT WIDTH`** setup value.
 
 **Recommended (clean) fix — match `PRINT WIDTH` to the paper.** Set it once in
 the printer's own setup; then the logical origin *is* the paper's left edge and
-text, raster images and barcodes all align. Add a small `left_offset_dots` so
-left-aligned text clears the head's physical non-printable left edge (offset 0
-clips the first column by 1–2 px), and trim the width to match:
+text, raster images and barcodes all align. Build the printer with `for_paper()`,
+which centers your content on the roll with a small safety margin (this also
+keeps left-aligned text off the head's physical non-printable left edge, which
+clips the first column by 1–2 px at offset 0):
 
 ```python
-p = Printer(paper_width_mm=55, left_offset_dots=12)  # PRINT WIDTH 58 mm; 12 = (58−55) mm ÷ 2 × 8 dots → centered
+p = Printer.for_paper(width_mm=58)   # 58 mm roll, 1.5 mm margin each side, centered
 p.begin()
+# equivalent to: Printer(paper_width_mm=55, left_offset_dots=12)  # (58−55) mm ÷ 2 × 8 = 12
 ```
 
 To set `PRINT WIDTH` from the front panel: power on while holding **LINE FEED**

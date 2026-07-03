@@ -8,6 +8,7 @@ from vkp80iii import (
     Barcode,
     CharsetCountry,
     CodePage,
+    CommandError,
     DummyTransport,
     Font,
     HRIPosition,
@@ -59,6 +60,41 @@ def test_set_print_area_default_uses_width():
     p = _p(paper_width_mm=54)
     p.set_print_area()
     assert bytes(p.transport.buffer) == b"\x1d\x57\xb0\x01"
+
+
+# =====================================================================
+# for_paper() centering factory
+# =====================================================================
+def test_for_paper_centers_with_default_margin():
+    p = Printer.for_paper(DummyTransport(), width_mm=58)
+    assert p.paper_width_mm == 55  # 58 - 2 * 1.5 mm margin
+    assert p.width_dots == 440
+    assert p.left_offset_dots == 12  # 1.5 mm * 8 dots/mm
+    p.begin()
+    # ESC @  +  GS L 12  +  GS W 440
+    assert bytes(p.transport.buffer) == b"\x1b\x40\x1d\x4c\x0c\x00\x1d\x57\xb8\x01"
+
+
+def test_for_paper_custom_margin():
+    p = Printer.for_paper(DummyTransport(), width_mm=80, margin_mm=2)
+    assert p.paper_width_mm == 76
+    assert p.left_offset_dots == 16  # 2 mm * 8
+
+
+def test_for_paper_zero_margin_uses_full_width():
+    p = Printer.for_paper(DummyTransport(), width_mm=58, margin_mm=0)
+    assert p.paper_width_mm == 58
+    assert p.left_offset_dots == 0
+
+
+def test_for_paper_rejects_margin_too_large():
+    with pytest.raises(CommandError):
+        Printer.for_paper(DummyTransport(), width_mm=3, margin_mm=1.5)
+
+
+def test_for_paper_rejects_negative_margin():
+    with pytest.raises(CommandError):
+        Printer.for_paper(DummyTransport(), width_mm=58, margin_mm=-1)
 
 
 # =====================================================================

@@ -24,7 +24,7 @@ def render(bctype: str, data: str, target_dots: int = 300) -> Image.Image:
 
 
 def main() -> None:
-    with Printer(paper_width_mm=55, left_offset_dots=12) as p:
+    with Printer.for_paper(width_mm=58) as p:
         p.begin()
         p.align(Justify.CENTER).bold().textln("RASTER 2D CODES").bold(False)
         p.textln("(rendered host-side)")

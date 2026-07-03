@@ -125,6 +125,48 @@ class Printer:
         if auto_open and not self.transport.is_open:
             self.transport.open()
 
+    @classmethod
+    def for_paper(
+        cls,
+        transport: Transport | None = None,
+        *,
+        width_mm: float,
+        margin_mm: float = 1.5,
+        codepage: CodePage | int = CodePage.PC437,
+        auto_open: bool = True,
+    ) -> Printer:
+        """Build a Printer centered on a ``width_mm`` roll (the recommended setup).
+
+        Assumes the firmware ``PRINT WIDTH`` matches the paper, so the logical
+        origin is the paper's left edge (see the README "Narrow paper" section).
+        ``margin_mm`` is inset on *each* side: the print area becomes
+        ``width_mm - 2 * margin_mm`` and content is centered via
+        ``left_offset_dots = round(margin_mm * DOTS_PER_MM)``. The margin also
+        keeps left-aligned text off the head's physical non-printable left edge
+        (offset 0 clips the first column by 1-2 px).
+
+        This is the convenient counterpart to passing ``paper_width_mm`` +
+        ``left_offset_dots`` yourself; use those directly for the software
+        fallback where the firmware ``PRINT WIDTH`` is *not* matched to the paper
+        and the offset is measured with ``python -m vkp80iii calibrate``.
+
+        :param width_mm: physical paper width in mm (= firmware ``PRINT WIDTH``).
+        :param margin_mm: safety/centering margin per side (default 1.5 mm =
+            12 dots at 8 dots/mm).
+        """
+        if margin_mm < 0:
+            raise CommandError(f"margin_mm must be >= 0, got {margin_mm}")
+        print_width_mm = width_mm - 2 * margin_mm
+        if print_width_mm <= 0:
+            raise CommandError(f"margin_mm={margin_mm} leaves no print area on a {width_mm} mm roll")
+        return cls(
+            transport,
+            codepage=codepage,
+            paper_width_mm=print_width_mm,
+            left_offset_dots=round(margin_mm * DOTS_PER_MM),
+            auto_open=auto_open,
+        )
+
     def set_print_area(self, dots: int | None = None) -> Printer:
         """``GS W`` -- set the printing area width (default: this paper's width)."""
         return self.send(c.set_print_area_width(self.width_dots if dots is None else dots))

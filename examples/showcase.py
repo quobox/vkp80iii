@@ -15,7 +15,7 @@ from vkp80iii import (
     Underline,
 )
 
-PAPER_MM, OFFSET = 55, 12  # offset 12 = (58-55) mm / 2 * 8 dots centers it on a 58 mm roll
+PAPER_ROLL_MM = 58  # physical roll width; for_paper() derives print area + centering offset
 
 
 def rule(p: Printer) -> None:
@@ -23,7 +23,9 @@ def rule(p: Printer) -> None:
 
 
 def main() -> None:
-    with Printer(paper_width_mm=PAPER_MM, left_offset_dots=OFFSET) as p:
+    # for_paper() centers the print area on the roll; margin_mm is the per-side
+    # safety margin (default 1.5 mm). Wider: for_paper(width_mm=58, margin_mm=4).
+    with Printer.for_paper(width_mm=PAPER_ROLL_MM) as p:
         p.begin()
         p.led((0, 200, 0))  # bezel LED green while printing
 

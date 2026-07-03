@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `Printer.for_paper(width_mm=..., margin_mm=1.5)` factory that centers content
+  on a roll whose width matches the firmware `PRINT WIDTH`, deriving the print
+  width and left offset so you don't have to compute dots by hand.
+
 ## [0.1.0] - 2026-06-26
 
 Initial release.
