@@ -3,6 +3,16 @@ name: Docs
 on:
   push:
     branches: [master]
+    # Only rebuild/redeploy when something that affects the rendered site
+    # changes -- avoids needless (and occasionally rate-limited) Pages deploys
+    # on unrelated pushes (e.g. lockfile-only changes).
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "src/**"
+      - "README.md"
+      - "CHANGELOG.md"
+      - ".github/workflows/docs.yml"
 
 # Allow the workflow to publish to GitHub Pages.
 permissions:
