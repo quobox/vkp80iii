@@ -1,4 +1,4 @@
-# Custom Engineering VKP80III thermal printer (USB 0dd4:0205)
+# Custom VKP80III thermal printer (USB 0dd4:0205)
 # Grants the 'lp' group read/write access to the printer's device nodes so a
 # normal user (member of 'lp') can print and read status without sudo.
 #

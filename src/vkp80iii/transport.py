@@ -31,7 +31,7 @@ from typing import Any
 
 from .exceptions import TransportError, TransportNotConnected
 
-#: Custom Engineering S.p.A. USB vendor id.
+#: Custom S.p.A. USB vendor id.
 USB_VENDOR_ID = 0x0DD4
 #: VKP80III USB product id.
 USB_PRODUCT_ID = 0x0205

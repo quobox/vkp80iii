@@ -1,7 +1,7 @@
 [project]
 name = "vkp80iii"
 version = "0.1.0"
-description = "Pure-Python driver for the Custom Engineering VKP80III thermal ticket printer (native VKP80III emulation, ESC/POS based)"
+description = "Pure-Python driver for the Custom VKP80III thermal ticket printer (native VKP80III emulation, ESC/POS based)"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]

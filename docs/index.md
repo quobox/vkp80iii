@@ -1,6 +1,6 @@
 # vkp80iii
 
-Pure-Python driver for the **Custom Engineering VKP80III** thermal ticket /
+Pure-Python driver for the **Custom VKP80III** thermal ticket /
 receipt printer. Independent, unofficial project — not affiliated with Custom
 S.p.A.
 

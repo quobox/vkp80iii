@@ -1,4 +1,4 @@
-"""vkp80iii -- a pure-Python driver for the Custom Engineering VKP80III.
+"""vkp80iii -- a pure-Python driver for the Custom VKP80III.
 
 The VKP80III is a thermal ticket/receipt printer that speaks an ESC/POS-derived
 command set (its "VKP80III emulation") with Custom-specific extensions for the

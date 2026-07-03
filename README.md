@@ -1,6 +1,6 @@
 # vkp80iii
 
-Pure-Python driver for the **Custom Engineering VKP80III** thermal ticket /
+Pure-Python driver for the **Custom VKP80III** thermal ticket /
 receipt printer. Independent, unofficial project — not affiliated with Custom
 S.p.A. (see [Disclaimer & trademarks](#disclaimer--trademarks)).
 
@@ -58,7 +58,7 @@ sudo usermod -aG lp "$USER"
 
 ```bash
 sudo tee /etc/udev/rules.d/99-vkp80iii.rules >/dev/null <<'EOF'
-# Custom Engineering VKP80III
+# Custom VKP80III
 SUBSYSTEM=="usbmisc", ATTRS{idVendor}=="0dd4", ATTRS{idProduct}=="0205", MODE="0660", GROUP="lp"
 KERNEL=="lp[0-9]*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0dd4", ATTRS{idProduct}=="0205", MODE="0660", GROUP="lp"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0dd4", ATTRS{idProduct}=="0205", MODE="0660", GROUP="lp"
