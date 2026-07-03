@@ -105,3 +105,11 @@ select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
 project-includes = ["src/vkp80iii"]
 search-path = ["typings"]   # hand-tweaked stubs for the untyped pyusb (issue #470)
 python-version = "3.10"
+
+[tool.pyrefly.errors]
+# The byte encoder/decoder deliberately coerces at its public boundaries:
+# int() normalizes IntEnum/bool arguments to a plain int, and bytes() snapshots a
+# bytearray/memoryview argument into an immutable copy. Pyrefly sees the static
+# types already matching and flags these as unnecessary, but they are intentional
+# defensive normalization -- keep the code, silence the (stylistic) lint.
+unnecessary-type-conversion = false
