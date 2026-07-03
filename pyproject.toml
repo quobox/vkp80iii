@@ -61,6 +61,7 @@ dev = [
     "Pillow>=10.0",
     "pyusb>=1.2",
     "pyserial>=3.5",
+    "types-pyserial>=3.5.0.20260519",
 ]
 # Documentation site (MkDocs Material + API reference from docstrings).
 docs = [
